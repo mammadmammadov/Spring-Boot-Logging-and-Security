@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +12,52 @@
             padding: 20px 40px;
             font-size: 24px;
         }
+
+        .center-text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh; /* Adjust as needed */
+        }
+
+
+
     </style>
 </head>
-<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-<div>
-    <h2 class="text-center mb-4">Welcome!</h2>
-    <a href="/login" target="_blank" class="btn btn-primary btn-lg btn-large mr-3">Login</a>
-    <a href="/signup" target="_blank" class="btn btn-success btn-lg btn-large">Signup</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/welcome">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/books">Books</a>
+            </li>
+            <!-- Add other navigation links here -->
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" formaction="/logout">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="center-text">
+    <!-- Conditional rendering based on user role -->
+    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <h1>Welcome, Admin!</h1>
+        <!-- Add admin-specific content here -->
+    </div>
+    <div th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <h1>Welcome, dear user!</h1>
+        <!-- Add user-specific content here -->
+    </div>
+    <!-- End of conditional rendering -->
 </div>
 
 <!-- Bootstrap JS and jQuery (optional, but required for some Bootstrap features) -->

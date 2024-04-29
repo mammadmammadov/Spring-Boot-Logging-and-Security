@@ -1,7 +1,6 @@
 package az.edu.ada.wm2.Assignment2.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import az.edu.ada.wm2.Assignment2.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,24 +8,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class BaseController {
 
-    @Autowired
-    @Qualifier("greetText")
-    private String welcomeMessage;
+    private final BookService bookService;
 
-    @Autowired
-    @Qualifier("byeText")
-    private String farewellMessage;
+    public BaseController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
-    @GetMapping("/")
-    public String getWelcomePage(Model model){
-        model.addAttribute("message", " This is global HOME page");
+    @GetMapping({"/welcome","/users", "/admins"})
+    public String getWelcomePage(Model model) {
+        String greetingMessage = bookService.getGreetingMessage();
+        model.addAttribute("greetingMessage", greetingMessage);
         return "welcome";
     }
 
     @GetMapping("/bye")
-    public String getFarewellPage(Model model){
-        model.addAttribute("message", farewellMessage);
+    public String getFarewellPage(Model model) {
+        model.addAttribute("message", "Goodbye!");
         return "welcome";
     }
-
 }

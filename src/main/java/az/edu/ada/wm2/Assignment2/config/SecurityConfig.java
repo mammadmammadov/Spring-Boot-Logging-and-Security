@@ -38,6 +38,32 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+
+        http
+                .csrf(x -> x.disable())
+                .headers(x -> x.disable())
+                .authorizeHttpRequests(request -> {
+                    request.requestMatchers("/users/**").hasAnyRole("ADMIN", "USER");
+                    request.requestMatchers("/admins/**").hasRole("ADMIN");
+                    request.requestMatchers("/", "/signup/**").permitAll();
+                    request.requestMatchers("/books/**").authenticated();
+                    request.requestMatchers(PathRequest.toH2Console()).permitAll();
+                    request.anyRequest().authenticated();//TBD
+                })
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/books", true)
+                        .permitAll());
+        return http.build();
+    }
+
+}
+
+/*
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .headers().frameOptions().sameOrigin()
@@ -61,4 +87,5 @@ public class SecurityConfig {
         return http.build();
     }
 
-}
+
+ */
