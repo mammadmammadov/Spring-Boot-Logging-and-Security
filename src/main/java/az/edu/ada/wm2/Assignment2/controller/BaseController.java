@@ -16,8 +16,6 @@ public class BaseController {
 
     @GetMapping({"/welcome","/users", "/admins"})
     public String getWelcomePage(Model model) {
-        String greetingMessage = bookService.getGreetingMessage();
-        model.addAttribute("greetingMessage", greetingMessage);
         return "welcome";
     }
 

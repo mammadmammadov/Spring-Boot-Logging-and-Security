@@ -1,8 +1,11 @@
-package az.edu.ada.wm2.Assignment2.util;
+package az.edu.ada.wm2.Assignment2.mapper;
 
 import az.edu.ada.wm2.Assignment2.model.dto.BookDto;
 import az.edu.ada.wm2.Assignment2.model.entity.Book;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class DtoEntityMapper {
@@ -23,5 +26,11 @@ public class DtoEntityMapper {
         bookDto.setAuthor(book.getAuthor());
         bookDto.setDescription(book.getDescription());
         return bookDto;
+    }
+
+    public List<BookDto> convertEntityListToDtoList(List<Book> books) {
+        return books.stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 }

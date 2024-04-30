@@ -2,7 +2,7 @@ package az.edu.ada.wm2.Assignment2.controller;
 
 import az.edu.ada.wm2.Assignment2.model.dto.BookDto;
 import az.edu.ada.wm2.Assignment2.service.BookService;
-import az.edu.ada.wm2.Assignment2.service.UserService;
+import az.edu.ada.wm2.Assignment2.util.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,35 +21,27 @@ public class BookController {
     private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
     private final BookService bookService;
-    private final UserService userService;
 
-    public BookController(BookService bookService, UserService userService) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
-        this.userService = userService;
     }
 
     @GetMapping
     public String getAllBooks(Model model) {
         List<BookDto> books = bookService.getAllBooks();
         model.addAttribute("books", books);
-        model.addAttribute("isAdmin", userService.isAdmin());
+        model.addAttribute("isAdmin", SecurityUtils.isAdmin());
         return "books";
     }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        if (!userService.isAdmin()) {
-            return "access-denied";
-        }
         model.addAttribute("bookDto", new BookDto());
         return "create-book";
     }
 
     @PostMapping("/create")
     public String createBook(@Valid @ModelAttribute("bookDto") BookDto bookDto, BindingResult bindingResult, Model model) {
-        if (!userService.isAdmin()) {
-            return "access-denied";
-        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("error", bindingResult.getFieldError().getDefaultMessage());
             logger.warn("Attempted to create a book with invalid data: {}", bindingResult.getTarget());
@@ -67,9 +59,6 @@ public class BookController {
 
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
-        if (!userService.isAdmin()) {
-            return "redirect:/access-denied";
-        }
         BookDto bookDto = bookService.getBookById(id);
         model.addAttribute("bookDto", bookDto);
         return "update-book";
@@ -77,9 +66,6 @@ public class BookController {
 
     @PostMapping("/update/{id}")
     public String updateBook(@PathVariable Long id, @Valid @ModelAttribute("bookDto") BookDto bookDto, BindingResult bindingResult) {
-        if (!userService.isAdmin()) {
-            return "access-denied";
-        }
         if (bindingResult.hasErrors()) {
             logger.warn("Attempted to update a book with invalid data: {}", bindingResult.getTarget());
             return "update-book";
@@ -96,9 +82,6 @@ public class BookController {
 
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
-        if (!userService.isAdmin()) {
-            return "access-denied";
-        }
         BookDto bookDto = bookService.getBookById(id);
         if (bookDto != null) {
             bookService.deleteBook(id);

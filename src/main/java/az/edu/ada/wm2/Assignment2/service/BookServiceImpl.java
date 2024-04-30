@@ -3,15 +3,13 @@ package az.edu.ada.wm2.Assignment2.service;
 import az.edu.ada.wm2.Assignment2.model.dto.BookDto;
 import az.edu.ada.wm2.Assignment2.model.entity.Book;
 import az.edu.ada.wm2.Assignment2.repo.BookRepository;
-import az.edu.ada.wm2.Assignment2.util.DtoEntityMapper;
+import az.edu.ada.wm2.Assignment2.mapper.DtoEntityMapper;
+import az.edu.ada.wm2.Assignment2.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -28,7 +26,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> getAllBooks() {
         List<Book> books = bookRepository.findAll();
-        return books.stream().map(dtoEntityMapper::convertEntityToDto).collect(Collectors.toList());
+        return dtoEntityMapper.convertEntityListToDtoList(books);
     }
 
     @Override
@@ -39,12 +37,18 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void createBook(BookDto bookDto) {
+        if (!SecurityUtils.isAdmin()) {
+            throw new SecurityException("Unauthorized access: Admin privileges required");
+        }
         Book book = dtoEntityMapper.convertDtoToEntity(bookDto);
         bookRepository.save(book);
     }
 
     @Override
     public void updateBook(Long id, BookDto bookDto) {
+        if (!SecurityUtils.isAdmin()) {
+            throw new SecurityException("Unauthorized access: Admin privileges required");
+        }
         Book bookToUpdate = dtoEntityMapper.convertDtoToEntity(bookDto);
         bookToUpdate.setId(id);
         bookRepository.save(bookToUpdate);
@@ -52,20 +56,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBook(Long id) {
-        bookRepository.deleteById(id);
-    }
-
-    public String getGreetingMessage() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated()) {
-            if (auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
-                return "Welcome, Admin!";
-            } else {
-                return "Welcome, dear user!";
-            }
-        } else {
-            return "Welcome!";
+        if (!SecurityUtils.isAdmin()) {
+            throw new SecurityException("Unauthorized access: Admin privileges required");
         }
+        bookRepository.deleteById(id);
     }
 
 }

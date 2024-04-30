@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <!-- Bootstrap CSS -->
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+
     <style>
         .btn-large {
             padding: 20px 40px;
@@ -19,9 +19,6 @@
             align-items: center;
             height: 80vh; /* Adjust as needed */
         }
-
-
-
     </style>
 </head>
 <body>
@@ -39,7 +36,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="/books">Books</a>
             </li>
-            <!-- Add other navigation links here -->
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" formaction="/logout">Logout</button>
@@ -48,19 +44,14 @@
 </nav>
 
 <div class="center-text">
-    <!-- Conditional rendering based on user role -->
     <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
         <h1>Welcome, Admin!</h1>
-        <!-- Add admin-specific content here -->
     </div>
     <div th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
         <h1>Welcome, dear user!</h1>
-        <!-- Add user-specific content here -->
     </div>
-    <!-- End of conditional rendering -->
 </div>
 
-<!-- Bootstrap JS and jQuery (optional, but required for some Bootstrap features) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
