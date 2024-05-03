@@ -1,0 +1,36 @@
+/* Selecting all paragraphs and giving them a red color */
+p {
+  color: red;
+}
+
+/* Styling headings with a blue background and white text */
+h1, h2, h3 {
+  background-color: blue;
+  color: white;
+}
+
+/* Making links bold and underlined */
+a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Adding a border to images */
+img {
+  border: 2px solid black;
+}
+
+/* Creating a rotating animation */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Applying animation to a specific element */
+.logo {
+  animation: rotate 5s linear infinite;
+}
