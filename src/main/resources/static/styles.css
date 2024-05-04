@@ -4,7 +4,7 @@ p {
 }
 
 /* Styling headings with a blue background and white text */
-h1, h2, h3 {
+h2, h3 {
   background-color: blue;
   color: white;
 }
@@ -30,7 +30,4 @@ img {
   }
 }
 
-/* Applying animation to a specific element */
-.logo {
-  animation: rotate 5s linear infinite;
-}
+
