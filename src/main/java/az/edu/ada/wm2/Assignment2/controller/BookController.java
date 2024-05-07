@@ -14,6 +14,9 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
+/**
+ * Controller class handling HTTP requests related to books.
+ */
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -22,10 +25,19 @@ public class BookController {
 
     private final BookService bookService;
 
+    /**
+     * Constructor injecting BookService dependency.
+     * @param bookService BookService instance to be injected.
+     */
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
+    /**
+     * Handles HTTP GET request to retrieve all books and display them.
+     * @param model Model to add attributes for the view.
+     * @return View name "books".
+     */
     @GetMapping
     public String getAllBooks(Model model) {
         List<BookDto> books = bookService.getAllBooks();
@@ -34,12 +46,24 @@ public class BookController {
         return "books";
     }
 
+    /**
+     * Displays the form for creating a new book.
+     * @param model Model to add attributes for the view.
+     * @return View name "create-book".
+     */
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("bookDto", new BookDto());
         return "create-book";
     }
 
+    /**
+     * Handles HTTP POST request to create a new book.
+     * @param bookDto BookDto object containing data of the new book.
+     * @param bindingResult BindingResult for validation errors.
+     * @param model Model to add attributes for the view.
+     * @return View name "create-book" if validation fails, otherwise redirects to "/books".
+     */
     @PostMapping("/create")
     public String createBook(@Valid @ModelAttribute("bookDto") BookDto bookDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -57,6 +81,12 @@ public class BookController {
         }
     }
 
+    /**
+     * Displays the form for updating an existing book.
+     * @param id ID of the book to be updated.
+     * @param model Model to add attributes for the view.
+     * @return View name "update-book".
+     */
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         BookDto bookDto = bookService.getBookById(id);
@@ -64,6 +94,13 @@ public class BookController {
         return "update-book";
     }
 
+    /**
+     * Handles HTTP POST request to update an existing book.
+     * @param id ID of the book to be updated.
+     * @param bookDto BookDto object containing updated data of the book.
+     * @param bindingResult BindingResult for validation errors.
+     * @return View name "update-book" if validation fails, otherwise redirects to "/books".
+     */
     @PostMapping("/update/{id}")
     public String updateBook(@PathVariable Long id, @Valid @ModelAttribute("bookDto") BookDto bookDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -80,6 +117,11 @@ public class BookController {
         }
     }
 
+    /**
+     * Handles HTTP GET request to delete a book.
+     * @param id ID of the book to be deleted.
+     * @return Redirects to "/books" after deleting the book.
+     */
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         BookDto bookDto = bookService.getBookById(id);
