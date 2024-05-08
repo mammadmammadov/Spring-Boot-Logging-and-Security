@@ -1,4 +1,4 @@
-# Book-Author CRUD Application :books:
+# Spring Boot Logging and Security :books:
 
 This README provides instructions on how to start and use the application from command line, and it includes a link to the video recording.
 ## Instructions
@@ -28,13 +28,13 @@ To start the CRUD application from Windows command line, follow these steps:
 
 ## Video Recording
 
-<a href="https://www.youtube.com/watch?v=9LVDAC2FKAk" target="_blank">Link to Video Recording</a>
+<a href="https://www.youtube.com/watch?v=9LVDAC2FKAk" target="_blank">Link to Video Recording</a><br><br>
 
 
 
 
+<p style="color:red"><strong>Below are the instructions set by the instructor:</strong></p>
 
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/dI1lUq2B)
 <h1> Assignment 2 </h1>
 <h3> Security and Logging. </h3>
 
