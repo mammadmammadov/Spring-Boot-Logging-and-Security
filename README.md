@@ -8,7 +8,7 @@ This README provides instructions on how to start and use the application from c
 ####
 **Note: You need to have JDK 17 and Gradle installed on your machine before following the instructions below.**
 
-To start the CRUD application from Windows command line, follow these steps:
+To start the application from Windows command line, follow these steps:
 
 1. Clone the repository or download it as a ZIP from github:
 
