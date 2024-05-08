@@ -11,6 +11,13 @@ java {
 	sourceCompatibility = '17'
 }
 
+javadoc{
+	options{
+		destinationDir = file("/doc/javadoc")
+		docTitle = 'Spring Boot Security App Documentation'
+	}
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor

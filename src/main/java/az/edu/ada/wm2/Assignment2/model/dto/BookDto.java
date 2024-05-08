@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Data Transfer Object (DTO) class representing a book.
+ * Contains fields corresponding to book attributes.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,5 +25,4 @@ public class BookDto {
 
     @NotBlank(message = "Description is required")
     private String description;
-
 }

@@ -1,0 +1,10 @@
+az.edu.ada.wm2.Assignment2
+az.edu.ada.wm2.Assignment2.config
+az.edu.ada.wm2.Assignment2.controller
+az.edu.ada.wm2.Assignment2.init
+az.edu.ada.wm2.Assignment2.mapper
+az.edu.ada.wm2.Assignment2.model.dto
+az.edu.ada.wm2.Assignment2.model.entity
+az.edu.ada.wm2.Assignment2.repo
+az.edu.ada.wm2.Assignment2.service
+az.edu.ada.wm2.Assignment2.util

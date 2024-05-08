@@ -14,14 +14,28 @@ public class BaseController {
         this.bookService = bookService;
     }
 
+    /**
+     * handling GET requests to paths "/welcome", "/users", and "/admins".
+     * rendering the welcome page.
+     *
+     * @param model The Model object to convey data to the view.
+     * @return The name of the view template to render ("welcome").
+     */
     @GetMapping({"/welcome","/users", "/admins"})
     public String getWelcomePage(Model model) {
         return "welcome";
     }
 
+    /**
+     * handling GET requests to the path "/bye".
+     * rendering the farewell page with a farewell message.
+     *
+     * @param model The Model object to convey data to the view.
+     * @return The name of the view template to render ("welcome").
+     */
     @GetMapping("/bye")
     public String getFarewellPage(Model model) {
-        model.addAttribute("message", "Goodbye!");
-        return "welcome";
+        model.addAttribute("message", "Goodbye!"); // adding a farewell message to the model
+        return "welcome"; // rendering the "welcome" view
     }
 }

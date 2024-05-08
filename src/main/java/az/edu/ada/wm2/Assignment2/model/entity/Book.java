@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import jakarta.persistence.*;
 
+/**
+ * Entity class representing a book.
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -30,5 +32,4 @@ public class Book {
     @NotBlank(message = "Description is required")
     @Size(max = 200, message = "Description must be less than 200 characters")
     private String description;
-
 }

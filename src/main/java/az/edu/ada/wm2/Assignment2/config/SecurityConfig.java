@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,14 +18,22 @@ import java.util.Optional;
 @Configuration
 public class SecurityConfig {
 
-//    @Value("${spring.h2.console.path}")
-//    private String h2Console;
-
+    /**
+     * This method defines a PasswordEncoder bean for encrypting passwords.
+     *
+     * @return A PasswordEncoder instance.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * This method defines a UserDetailsService bean for fetching user details from the database.
+     *
+     * @param repo The UserRepository to fetch user details.
+     * @return A UserDetailsService instance.
+     */
     @Bean
     public UserDetailsService userDetailsService(UserRepository repo) {
         return username -> {
@@ -36,56 +45,33 @@ public class SecurityConfig {
         };
     }
 
+    /**
+     * This method configures the security filter chain for handling HTTP requests.
+     *
+     * @param http The HttpSecurity instance to configure security settings.
+     * @return A SecurityFilterChain instance.
+     * @throws Exception If an error occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-
         http
-                .csrf(x -> x.disable())
-                .headers(x -> x.disable())
+                .csrf(AbstractHttpConfigurer::disable) // disabling CSRF protection
+                .headers(AbstractHttpConfigurer::disable) // disabling header protections
                 .authorizeHttpRequests(request -> {
+                    // defining authorization rules for different URL paths
                     request.requestMatchers("/users/**").hasAnyRole("ADMIN", "USER");
                     request.requestMatchers("/admins/**").hasRole("ADMIN");
                     request.requestMatchers("/", "/signup/**").permitAll();
                     request.requestMatchers("/books/**").authenticated();
-                    request.requestMatchers(PathRequest.toH2Console()).permitAll();
-                    request.anyRequest().authenticated();//TBD
+                    request.requestMatchers(PathRequest.toH2Console()).permitAll(); // allowing access to H2 console
+                    request.anyRequest().authenticated(); // authenticating any other request
                 })
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/books", true)
-                        .permitAll());
+                        .loginPage("/login") // specifying the custom login page
+                        .defaultSuccessUrl("/books", true) // redirecting to "/books" after successful login
+                        .permitAll()); // allowing access to the login page without authentication
         return http.build();
     }
 
 }
 
-/*
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .headers().frameOptions().sameOrigin()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
-                .requestMatchers("/admins/**").hasRole("ADMIN")
-                .requestMatchers("/", "/signup/**").permitAll()
-                .requestMatchers("/books/**").authenticated()
-                .requestMatchers(PathRequest.toH2Console()).permitAll() //TBD
-//                .requestMatchers(h2Console + "/**").permitAll() //TBD
-                .anyRequest().authenticated()
-                .and()
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/books", true)
-                        .permitAll())
-        ;
-
-
-        return http.build();
-    }
-
-
- */

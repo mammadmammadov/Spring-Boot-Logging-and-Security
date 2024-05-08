@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controller class handling HTTP requests related to books.
@@ -25,16 +26,13 @@ public class BookController {
 
     private final BookService bookService;
 
-    /**
-     * Constructor injecting BookService dependency.
-     * @param bookService BookService instance to be injected.
-     */
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
     /**
-     * Handles HTTP GET request to retrieve all books and display them.
+     * HTTP GET request to retrieve all books and display them.
+     *
      * @param model Model to add attributes for the view.
      * @return View name "books".
      */
@@ -47,7 +45,8 @@ public class BookController {
     }
 
     /**
-     * Displays the form for creating a new book.
+     * Displaying the form for creating a new book.
+     *
      * @param model Model to add attributes for the view.
      * @return View name "create-book".
      */
@@ -58,16 +57,17 @@ public class BookController {
     }
 
     /**
-     * Handles HTTP POST request to create a new book.
-     * @param bookDto BookDto object containing data of the new book.
+     * HTTP POST request to create a new book.
+     *
+     * @param bookDto       BookDto object containing data of the new book.
      * @param bindingResult BindingResult for validation errors.
-     * @param model Model to add attributes for the view.
+     * @param model         Model to add attributes for the view.
      * @return View name "create-book" if validation fails, otherwise redirects to "/books".
      */
     @PostMapping("/create")
     public String createBook(@Valid @ModelAttribute("bookDto") BookDto bookDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("error", bindingResult.getFieldError().getDefaultMessage());
+            model.addAttribute("error", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             logger.warn("Attempted to create a book with invalid data: {}", bindingResult.getTarget());
             return "create-book";
         }
@@ -82,8 +82,9 @@ public class BookController {
     }
 
     /**
-     * Displays the form for updating an existing book.
-     * @param id ID of the book to be updated.
+     * Displaying the form for updating an existing book.
+     *
+     * @param id    ID of the book to be updated.
      * @param model Model to add attributes for the view.
      * @return View name "update-book".
      */
@@ -95,9 +96,10 @@ public class BookController {
     }
 
     /**
-     * Handles HTTP POST request to update an existing book.
-     * @param id ID of the book to be updated.
-     * @param bookDto BookDto object containing updated data of the book.
+     * HTTP POST request to update an existing book.
+     *
+     * @param id            ID of the book to be updated.
+     * @param bookDto       BookDto object containing updated data of the book.
      * @param bindingResult BindingResult for validation errors.
      * @return View name "update-book" if validation fails, otherwise redirects to "/books".
      */
@@ -118,7 +120,8 @@ public class BookController {
     }
 
     /**
-     * Handles HTTP GET request to delete a book.
+     * HTTP GET request to delete a book.
+     *
      * @param id ID of the book to be deleted.
      * @return Redirects to "/books" after deleting the book.
      */

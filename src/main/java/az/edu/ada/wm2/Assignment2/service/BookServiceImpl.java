@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of the BookService interface providing methods to manage Book entities.
+ */
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -23,18 +26,34 @@ public class BookServiceImpl implements BookService {
         this.dtoEntityMapper = dtoEntityMapper;
     }
 
+    /**
+     * Retrieves a list of all books.
+     *
+     * @return List of BookDto objects representing all books.
+     */
     @Override
     public List<BookDto> getAllBooks() {
         List<Book> books = bookRepository.findAll();
         return dtoEntityMapper.convertEntityListToDtoList(books);
     }
 
+    /**
+     * Retrieves a book by its ID.
+     *
+     * @param id The ID of the book to retrieve.
+     * @return BookDto representing the retrieved book, or null if not found.
+     */
     @Override
     public BookDto getBookById(Long id) {
         Optional<Book> bookOptional = bookRepository.findById(id);
         return bookOptional.map(dtoEntityMapper::convertEntityToDto).orElse(null);
     }
 
+    /**
+     * Creates a new book.
+     *
+     * @param bookDto BookDto object containing data of the new book.
+     */
     @Override
     public void createBook(BookDto bookDto) {
         if (!SecurityUtils.isAdmin()) {
@@ -44,6 +63,12 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(book);
     }
 
+    /**
+     * Updates an existing book.
+     *
+     * @param id      ID of the book to update.
+     * @param bookDto BookDto object containing updated data of the book.
+     */
     @Override
     public void updateBook(Long id, BookDto bookDto) {
         if (!SecurityUtils.isAdmin()) {
@@ -54,6 +79,11 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(bookToUpdate);
     }
 
+    /**
+     * Deletes a book by its ID.
+     *
+     * @param id The ID of the book to delete.
+     */
     @Override
     public void deleteBook(Long id) {
         if (!SecurityUtils.isAdmin()) {

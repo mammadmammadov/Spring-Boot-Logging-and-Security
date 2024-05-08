@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class handling user registration.
+ */
 @Controller
 @RequestMapping("/signup")
 public class RegistrationController {
@@ -20,6 +23,12 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Displayinh the signup form.
+     *
+     * @param model Model to add attributes for the view.
+     * @return View name "registration".
+     */
     @GetMapping
     public String showSignup(Model model) {
         model.addAttribute("signupDto", new SignupDto());
@@ -27,10 +36,17 @@ public class RegistrationController {
         return "registration";
     }
 
+    /**
+     * Handling user signup request.
+     *
+     * @param signupDto     SignupDto object containing user signup data.
+     * @param bindingResult BindingResult for validation errors.
+     * @param model         Model to add attributes for the view.
+     * @return Redirects to login page if signup is successful, otherwise returns to the registration page.
+     */
     @PostMapping
     public String signup(@Valid @ModelAttribute SignupDto signupDto, BindingResult bindingResult, Model model) {
         try {
-
             if (bindingResult.hasErrors()) {
                 logger.warn("Validation error(s) occurred during signup");
                 return "registration";

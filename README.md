@@ -1,3 +1,39 @@
+# Book-Author CRUD Application :books:
+
+This README provides instructions on how to start and use the application from command line, and it includes a link to the video recording.
+## Instructions
+
+### Starting the Application
+
+####
+**Note: You need to have JDK 17 and Gradle installed on your machine before following the instructions below.**
+
+To start the CRUD application from Windows command line, follow these steps:
+
+1. Clone the repository or download it as a ZIP from github:
+
+   ```bash
+   git clone --depth 1 https://github.com/SITE-ADA/as1-spring-boot-logging-and-security-mammadmammadov.git
+
+2. Navigate to the project directory:
+   ```bash
+   cd as1-spring-boot-logging-and-security-mammadmammadov
+3. Build the application:
+   ```bash
+   .\gradlew build
+4. Run the application
+   ```bash
+   .\gradlew bootRun
+5. To access the application, enter http://localhost:8080
+
+## Video Recording
+
+<a href="https://www.youtube.com/watch?v=9LVDAC2FKAk" target="_blank">Link to Video Recording</a>
+
+
+
+
+
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/dI1lUq2B)
 <h1> Assignment 2 </h1>
 <h3> Security and Logging. </h3>
