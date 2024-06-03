@@ -34,13 +34,6 @@ To start the application from Windows command line, follow these steps:
 **Username:** mammad  
 **Password:** 12345
 
-## Video Recording
-
-<a href="https://www.youtube.com/watch?v=9LVDAC2FKAk" target="_blank">Link to Video Recording</a><br><br>
-
-
-
-
 <p style="color:red"><strong>Below are the instructions set by the instructor:</strong></p>
 
 <h1> Assignment 2 </h1>
