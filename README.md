@@ -34,8 +34,8 @@ To start the application from Windows command line, follow these steps:
 **Username:** mammad  
 **Password:** 12345
 
-<p style="color:red"><strong>Below are the instructions set by the instructor:</strong></p>
-
+##  &#8595; Project Requirements &#8595;
+<em>
 <h1> Assignment 2 </h1>
 <h3> Security and Logging. </h3>
 
@@ -129,3 +129,4 @@ nagivate through you web site. You may pick one of the entities from the previou
 This assignment will give you <strong>10%</strong> of the total. <br />
 <em> Good luck! </em> <br />
 <em> NS </em>
+</em>
